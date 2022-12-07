@@ -1,0 +1,1 @@
+openssl req   -newkey rsa:4096 -nodes -sha256 -keyout /etc/gitlab/ssl/registry.ararat.bk.key   -x509 -days 365 -out /etc/gitlab/ssl/registry.ararat.bk.crt

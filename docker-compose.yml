@@ -1,0 +1,25 @@
+version: '3.6'
+services:
+  gitlab:
+    image: 'gitlab/gitlab-ce:latest'
+    restart: always
+    hostname: 'gitlab.ararat.bk'
+    environment:
+      GITLAB_OMNIBUS_CONFIG: |
+        external_url 'http://gitlab.ararat.bk'
+        gitlab_rails['lfs_enabled'] = true
+        registry_external_url 'https://registry.ararat.bk'
+        gitlab_rails['registry_path'] = "/var/opt/gitlab/gitlab-rails/shared/registry"
+        registry['enable'] = true
+        registry_nginx['enable'] = true
+        registry_nginx['ssl_certificate'] ="/etc/gitlab/ssl/registry.ararat.bk.crt"
+        registry_nginx['ssl_certificate_key'] ="/etc/gitlab/ssl/registry.ararat.bk.key"
+    ports:
+      - '80:80'
+      - '443:443'
+      - '22:22'
+    volumes:
+      - '$GITLAB_HOME/config:/etc/gitlab'
+      - '$GITLAB_HOME/logs:/var/log/gitlab'
+      - '$GITLAB_HOME/data:/var/opt/gitlab'
+    shm_size: '256m'
